@@ -1,17 +1,25 @@
 package lexicon.spring.BookLoanWorkshop.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Objects;
 @Entity
 public class AppUser {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int appUserId;
+    @Column(nullable = false,unique = true)
     private String username;
+    @Column(nullable = false)
     private String password;
+    @Column(nullable = false)
     private LocalDate regDate;
+
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_details1",referencedColumnName = "detailsId")
     private Details userDetails;
+
 
     public AppUser() {
     }
@@ -22,6 +30,15 @@ public class AppUser {
         this.regDate = regDate;
 
     }
+
+    public AppUser(String username, String password, LocalDate regDate, Details userDetails) {
+        this.username = username;
+        this.password = password;
+        this.regDate = regDate;
+        this.userDetails = userDetails;
+    }
+
+
 
     public int getAppUserId() {
         return appUserId;
