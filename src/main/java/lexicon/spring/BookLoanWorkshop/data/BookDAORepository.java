@@ -26,6 +26,7 @@ public class BookDAORepository implements BookDao {
     public Collection<Book> findAll() {
         return entityManager.createQuery("select b from Book b").getResultList();
     }
+
     @Transactional(rollbackFor = RuntimeException.class)
     @Override
     public Book create(Book book) {

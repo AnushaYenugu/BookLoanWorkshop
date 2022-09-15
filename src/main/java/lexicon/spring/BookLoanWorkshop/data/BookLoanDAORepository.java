@@ -38,6 +38,7 @@ public class BookLoanDAORepository implements BookLoanDao {
     public BookLoan update(BookLoan bookLoan) {
         return entityManager.merge(bookLoan);
     }
+
     @Transactional(rollbackFor = RuntimeException.class)
     @Override
     public void delete(int id) {

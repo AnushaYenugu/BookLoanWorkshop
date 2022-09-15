@@ -17,14 +17,23 @@ import java.time.LocalDate;
 public class MyCommandLine implements CommandLineRunner {
 
     private EntityManager entityManager;
+
     AppUserDao appUserDao;
     DetailsDao detailsDao;
+    AuthorDao authorDao;
+    BookDao bookDao;
+
     @Autowired
-    public MyCommandLine(EntityManager entityManager,AppUserDao appUserDao,DetailsDao detailsDao) {
+    public MyCommandLine(EntityManager entityManager,AppUserDao appUserDao,DetailsDao detailsDao, AuthorDao authorDao, BookDao bookDao) {
        this.entityManager=entityManager;
         this.appUserDao = appUserDao;
         this.detailsDao=detailsDao;
+        this.authorDao=authorDao;
+        this.bookDao=bookDao;
     }
+
+
+
 
     @Override
     public void run(String... args) throws Exception {
