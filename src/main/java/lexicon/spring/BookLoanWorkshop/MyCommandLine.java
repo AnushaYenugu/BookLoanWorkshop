@@ -1,9 +1,10 @@
 package lexicon.spring.BookLoanWorkshop;
 
 import lexicon.spring.BookLoanWorkshop.dao.AppUserDao;
+import lexicon.spring.BookLoanWorkshop.dao.AuthorDao;
+import lexicon.spring.BookLoanWorkshop.dao.BookDao;
 import lexicon.spring.BookLoanWorkshop.dao.DetailsDao;
-import lexicon.spring.BookLoanWorkshop.model.AppUser;
-import lexicon.spring.BookLoanWorkshop.model.Details;
+import lexicon.spring.BookLoanWorkshop.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -40,6 +41,40 @@ public class MyCommandLine implements CommandLineRunner {
 
         appUser1.setUserDetails(details1);
         appUser2.setUserDetails(details2);
+        Book book1=new Book("swe123","Peppa Pig",14);
+        BookLoan appuser1BookLoan=new BookLoan(LocalDate.now(),LocalDate.now().plusDays(20),false);
+        BookLoan appuser2BookLoan=new BookLoan(LocalDate.now(),LocalDate.now().plusDays(28),false);
+
+        BookLoan bookLoan1=new BookLoan(LocalDate.now(),LocalDate.now(),false);
+
+
+
+        appUser1.addBookLoan(appuser1BookLoan);
+        appUser2.addBookLoan(appuser2BookLoan);
+        appUser1.addBookLoan(bookLoan1);
+        appUser1.removeBookLoan(bookLoan1);
+
+      //  appuser1BookLoan.addAppUser(appUser1);
+       // appuser2BookLoan.addAppUser(appUser2);
+
+
+        Book book2=new Book("swe1234","Pippi Långstrumps",14);
+        Author peppa=new Author("Peppa","Pig");
+        Author pippi=new Author("Pippi","Långstrump");
+
+
+
+
+        //test
+        //
+       // Book stestBokk1 = bookDao.create(new Book("swe123","Peppa Pig",14));
+
+        authorDao.create(peppa);
+        authorDao.create(pippi);
+        bookDao.create(book1);
+        bookDao.create(book2);
+        book1.addAuthor(peppa);
+        book2.addAuthor(pippi);
 
 
 

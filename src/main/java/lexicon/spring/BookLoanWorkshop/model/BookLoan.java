@@ -14,13 +14,28 @@ public class BookLoan {
     private LocalDate dueDate;
     private boolean returned;
 
-    @ManyToOne(cascade = {CascadeType.REFRESH,CascadeType.DETACH})
+    @ManyToOne(cascade = {CascadeType.REFRESH,CascadeType.DETACH,CascadeType.ALL})
     @JoinColumn(name="borrower")
     AppUser borrower;
 
     @ManyToOne(cascade={CascadeType.REFRESH,CascadeType.DETACH})
     @JoinColumn(name="loaned_book")
     Book book;
+
+    //Convience Methods
+
+    public void addAppUser(AppUser appUser){
+        if(appUser == null) throw new IllegalArgumentException("AppUser is null");
+        appUser.getLoans().add(this);
+
+    }
+
+    public void removeAppUser(AppUser appUser){
+        if(appUser==null) throw new IllegalArgumentException("AppUser is null");
+        appUser.getLoans().remove(this);
+    }
+
+
 
     public BookLoan() {
     }

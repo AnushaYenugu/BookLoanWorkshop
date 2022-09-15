@@ -1,7 +1,11 @@
 package lexicon.spring.BookLoanWorkshop.model;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
+import java.util.TreeSet;
+
 @Entity
 public class Book {
     @Id
@@ -11,9 +15,8 @@ public class Book {
     private String title;
     private int maxLoanDays;
 
-    @ManyToOne
-    @JoinColumn(name= "bookloan_id")
-    private BookLoan bookLoan;
+    @ManyToMany(mappedBy = "writtenBooks",cascade ={CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REFRESH,CascadeType.DETACH})
+    Set<Author> authors=new HashSet<>();
 
     public Book() {
     }
@@ -22,6 +25,40 @@ public class Book {
         this.isbn = isbn;
         this.title = title;
         this.maxLoanDays = maxLoanDays;
+    }
+
+    public Book(int bookId, String isbn, String title, int maxLoanDays, Set<Author> authors) {
+        this.bookId = bookId;
+        this.isbn = isbn;
+        this.title = title;
+        this.maxLoanDays = maxLoanDays;
+        this.authors = authors;
+    }
+
+    
+    //Covience Methods
+
+    public void addAuthor(Author author){
+        if(author==null) throw new IllegalArgumentException("Author is null");
+       // if(authors==null) authors=new HashSet<>();
+        authors.add(author);
+        author.getWrittenBooks().add(this);
+
+    }
+
+    public void removeAuthor(Author author){
+        if(author==null) throw new IllegalArgumentException("Author is null");
+        authors.remove(author);
+        author.getWrittenBooks().remove(this);
+
+    }
+    
+    public Set<Author> getAuthors() {
+        return authors;
+    }
+
+    public void setAuthors(Set<Author> authors) {
+        this.authors = authors;
     }
 
     public int getBookId() {

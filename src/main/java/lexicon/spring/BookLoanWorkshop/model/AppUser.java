@@ -3,6 +3,8 @@ package lexicon.spring.BookLoanWorkshop.model;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 @Entity
 public class AppUser {
@@ -19,6 +21,30 @@ public class AppUser {
     @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinColumn(name = "user_details1",referencedColumnName = "detailsId")
     private Details userDetails;
+
+    @OneToMany(cascade = {CascadeType.REFRESH,CascadeType.DETACH,CascadeType.ALL})
+    List<BookLoan> loans;
+
+    //Convience Methods
+
+    public void addBookLoan(BookLoan  bookLoan){
+        if(bookLoan==null) throw new IllegalArgumentException("BookLoan is null");
+        if(loans==null) loans=new ArrayList<>();
+        loans.add(bookLoan);
+        bookLoan.setBorrower(this);
+
+    }
+
+    public void removeBookLoan(BookLoan bookLoan){
+        if(bookLoan==null) throw new IllegalArgumentException("Book Loan is null");
+        if(bookLoan!=null){
+            if(loans.contains(bookLoan)){
+                loans.remove(bookLoan);
+                 bookLoan.setBorrower(null);
+            }
+        }
+    }
+
 
 
     public AppUser() {
@@ -39,6 +65,13 @@ public class AppUser {
     }
 
 
+    public List<BookLoan> getLoans() {
+        return loans;
+    }
+
+    public void setLoans(List<BookLoan> loans) {
+        this.loans = loans;
+    }
 
     public int getAppUserId() {
         return appUserId;
