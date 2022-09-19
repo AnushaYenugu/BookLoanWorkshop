@@ -29,7 +29,7 @@ public class DetailsDAORepository implements DetailsDao {
       Query selectQuery=  entityManager.createQuery("select d from Details d");
         return selectQuery.getResultList();
     }
-    @Transactional(rollbackFor = RuntimeException.class)
+    @Transactional()
     @Override
     public Details create(Details details) {
       entityManager.persist(details);

@@ -19,10 +19,10 @@ public class AppUser {
     private LocalDate regDate;
 
     @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_details1",referencedColumnName = "detailsId")
+    @JoinColumn(name = "user_details",referencedColumnName = "detailsId")
     private Details userDetails;
 
-    @OneToMany(cascade = {CascadeType.REFRESH,CascadeType.DETACH,CascadeType.ALL})
+    @OneToMany(cascade = {CascadeType.REFRESH,CascadeType.DETACH,CascadeType.ALL},fetch = FetchType.LAZY)
     List<BookLoan> loans;
 
     //Convience Methods
@@ -64,6 +64,20 @@ public class AppUser {
         this.userDetails = userDetails;
     }
 
+    public AppUser(int appUserId, String username, String password, LocalDate regDate, Details userDetails, List<BookLoan> loans) {
+        this.appUserId = appUserId;
+        this.username = username;
+        this.password = password;
+        this.regDate = regDate;
+        this.userDetails = userDetails;
+        this.loans = loans;
+    }
+
+    public AppUser(String username, String password, Details details) {
+        this.username = username;
+        this.password = password;
+        this.userDetails=details;
+    }
 
     public List<BookLoan> getLoans() {
         return loans;
@@ -72,6 +86,7 @@ public class AppUser {
     public void setLoans(List<BookLoan> loans) {
         this.loans = loans;
     }
+
 
     public int getAppUserId() {
         return appUserId;

@@ -23,7 +23,7 @@ public class BookLoan {
     Book book;
 
     //Convience Methods
-
+/**
     public void addAppUser(AppUser appUser){
         if(appUser == null) throw new IllegalArgumentException("AppUser is null");
         appUser.getLoans().add(this);
@@ -34,7 +34,7 @@ public class BookLoan {
         if(appUser==null) throw new IllegalArgumentException("AppUser is null");
         appUser.getLoans().remove(this);
     }
-
+**/
 
 
     public BookLoan() {
